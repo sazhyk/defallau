@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     # Allauth Socialaccount Providers
-    'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE_CLASSES = [
