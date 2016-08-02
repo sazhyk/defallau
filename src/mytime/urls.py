@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from mytime import views as mt_views
+
+from allauth.account import views as all_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('allauth.urls')),
+    url(r'^', include('allauth.urls')),
+    # url(r'^$', all_views.login, name="home_page"),
+    url(r'^$', mt_views.home, name="home_page"),
 ]
