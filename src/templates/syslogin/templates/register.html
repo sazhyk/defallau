@@ -6,8 +6,8 @@
 {% load account socialaccount %}
 
 {% block head_title %}
-    {% if request.user.is_authenticated and request.user.is_active %}
-        {% trans "Привет," %} {{ request.user.username }}
+    {% if request.user.is_authenticated %}
+        {% trans "Привет," %} {{ request.user }}
         {% else %}
         {% trans "Добро пожаловать!" %}
     {% endif %}
@@ -16,6 +16,7 @@
     {% block extra_head %}
         {% bootstrap_css %}
         <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/registration.css' %}"/>
 
         <script src="{% static 'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
     {% endblock %}
@@ -41,47 +42,48 @@
             </div>
     {% endblock %}
 
-    {% block content %}
+        {% block content %}
         {% get_providers as socialaccount_providers %}
         <div class="container index-main">
             <div class="row">
             {% block login_form %}
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                {% if request.user.is_authenticated %}
-                    <p>Вы авторизованы как {{ request.user }}</p>
-                    <p><a class="btn btn-success" href="">Перейти в личный кабинет</a> </p>
-                    <p>Или войти как <a class="" href="{% url 'account_logout' %}">другой пользователь</a> </p>
-                    {% else %}
-                    <form class="login" method="POST" action="{% url 'account_login' %}">
+                <div class="col-xs-12 col-sm-7 col-md-8">
+                    <div class="col-sx-12 colsm-7 col-md-12">
+                        <form class="signup form-horizontal" id="signup_form" method="post" action="{% url 'account_signup' %}">
                     {% csrf_token %}
-                    {% bootstrap_form login_form label='horizontal' %}
+                    {% for field in signup_form %}
+                    {% bootstrap_field field layout='horizontal' %}
+                    {% endfor %}
                     {% if redirect_field_value %}
-                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                     {% endif %}
-                        <p class="login-form-btn-register"><a href="{% url 'register' %}" class="btn btn-success">Регистрация</a></p>
-                        <p class="login-form-btn-login"><button type="submit" class="btn btn-primary">{% trans "Sign In" %}</button></p>
-                        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                    <p class="login-form-btn-register"><button type="submit" class="btn btn-success btn-register">{% trans "Sign Up" %}</button></p>
+                    <p class="help-block agree-help">Нажимая кнопку <strong>{% trans "Sign Up" %}</strong> вы соглашаетесь с <a href=""><em>условиями использования</em></a> сервиса</p>
                     </form>
-                {% endif %}
+                    </div>
                 </div>
             {% endblock %}
         {% block static_content %}
-                <div class="col-xs-12 col-sm-6 col-md-8">
-                        <h2>Heading</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <div class="site-preview" id="site-preview">
-                            <img src="{% static 'img/prev-site.jpg' %}" alt="page1" class="img-thumbnail" tabindex="0">
-                            <img src="{% static 'img/prev-site.jpg' %}" alt="page1" class="img-thumbnail" tabindex="0">
-                            <img src="{% static 'img/prev-site.jpg' %}" alt="page1" class="img-thumbnail" tabindex="0">
-                            <div></div>
-                        </div>
+            <div class="col-xs-12 col-sm-5 col-md-4">
+                <div class="login-social-container">
+                    <h4>Войти с помощью</h4>
+                    <div class="login-social-icon">
+                        <span class="login-social-fb">
+                            <a href="#" class="login-social-link"></a>
+                        </span>
+                        <span class="login-social-vk">
+                            <a href="#" class="login-social-link"></a>
+                        </span>
+                        <span class="login-social-gp">
+                            <a href="#" class="login-social-link"></a>
+                        </span>
                     </div>
+                </div>
+            </div>
         {% endblock %}
             </div>
         </div>
-    {% endblock %}
+        {% endblock %}
 
     {% block footer %}
         <footer class="footer">

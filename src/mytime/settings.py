@@ -146,6 +146,19 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_USERNAME_BLACKLIST = [
+    'admin',
+    'administrator',
+    'god',
+]
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
+EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/lk/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 
 # Email SETTINGS
@@ -156,7 +169,6 @@ EMAIL_HOST_PASSWORD = 'D#^RKqdffd'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'mytime100@mail.ru'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 
 # Django Sites SETTINGS
@@ -167,6 +179,11 @@ SITE_ID = 2
 # Botstrap3 SETTINGS
 
 BOOTSTRAP3 = {
+    # Label class to use in horizontal forms
+    'horizontal_label_class': 'col-md-4',
+
+    # Field class to use in horizontal forms
+    'horizontal_field_class': 'col-md-8',
     'jquery_url': '//code.jquery.com/jquery.min.js',
     'formset_renderers': {
         'default': 'bootstrap3.renderers.FormsetRenderer',
